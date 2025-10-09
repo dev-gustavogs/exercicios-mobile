@@ -4,7 +4,7 @@ import LoginScreen from './src/screems/LoginScreens'
 
 const App = () => {
   return (
-    <View>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <LoginScreen/>
     </View>
   )
