@@ -1,17 +1,28 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCSDJqvPA9rRqYUIpL4I9akoUG2eoNjpeA",
-  authDomain: "react-native-uniesp-b1608.firebaseapp.com",
-  projectId: "react-native-uniesp-b1608",
-  storageBucket: "react-native-uniesp-b1608.firebasestorage.app",
-  messagingSenderId: "341836374156",
-  appId: "1:341836374156:web:4d9aacdeee3c4bf9251ba9"
+apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
+authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
+projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
+storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
+messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const missingConfigKeys = Object.entries(firebaseConfig)
+.filter(([, value]) => !value)
+.map(([key]) => key);
+
+if (missingConfigKeys.length) {
+throw new Error(
+`Firebase configuration ausente. Verifique as variáveis: ${missingConfigKeys.join(
+", "
+)}`
+);
+}
+
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+export { app, db };
