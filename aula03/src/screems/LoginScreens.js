@@ -1,19 +1,28 @@
 import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
 import { useState } from 'react'
-import Icon from 'react-native-vector-icons/FontAwesome'
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
 
   const [email, setEmail] = useState("")
   const [senha, setSenha] = useState("")
 
+  const goToHomeScreen = () => {
+    navigation.navigate('Home')
+  }
+  const handleGithubPress = () => {
+    alert('Logando pelo Github');
+  };
+  const handleGooglePress = () => {
+    alert('Logando pelo Google');
+  };
+
+
   return (
     <View style={styles.container}>
       <Image
-      source={{uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/old_logo.png'}}
-      style={styles.logo}
-      resizeMethod="contain"
+        source={{ uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/old_logo.png' }}
+        style={styles.logo}
+        resizeMethod="contain"
       />
       <Text style={styles.title}>Login</Text>
 
@@ -32,7 +41,7 @@ const LoginScreen = () => {
         onChangeText={setSenha}
       />
 
-      <Button title="Entrar" />
+      <Button title="Entrar" onPress={goToHomeScreen} />
 
       <View style={styles.linksRow}>
         <Text>Esqueceu sua senha?</Text>
@@ -41,20 +50,14 @@ const LoginScreen = () => {
 
       <Text style={styles.orText}>Ou entre com</Text>
 
-      { /* Botão GitHub */ }
-      <TouchableOpacity style={[styles.socialButtons, { backgroundColor: '#333' }]}>
-        <Icon name="github" size={20} color="#fff" style={styles.icon} />
-        <Text style={styles.socialText}>Entrar com GitHub</Text>
-      </TouchableOpacity>
-
-      {/* Botão Google */}
-      <TouchableOpacity style={[styles.socialButtons, { backgroundColor: '#DB4437' }]}>
-        <Icon name="google" size={20} color="#fff" style={styles.icon} />
+      <TouchableOpacity onPress={handleGooglePress} style={[styles.socialButtons, { backgroundColor: '#DB4437' }]}>
         <Text style={styles.socialText}>Entrar com Google</Text>
       </TouchableOpacity>
-
+      <TouchableOpacity onPress={handleGithubPress} style={[styles.socialButtons, { backgroundColor: '#333' }]}>
+        <Text style={styles.socialText}>Entrar com Github</Text>
+      </TouchableOpacity>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
